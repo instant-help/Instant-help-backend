@@ -1,0 +1,64 @@
+Messaging links
+https://discordapp.com/
+https://sendbird.com/
+https://www.cometchat.com/
+https://www.applozic.com/
+https://pusher.com/
+https://www.quora.com/What-SDKs-APIs-are-viable-for-implementing-instant-messaging-between-clients-Android-iOS-and-web
+https://www.twilio.com/
+https://www.nexmo.com/
+https://www.bandwidth.com/
+https://pusher.com/sessions/meetup/front-end-london/building-universal-javascript-applications
+
+createdb ihelp_dev  
+npm run knex migrate:make users  
+Created Migration: /Users/admin/Documents/Galvanize/Capstone/Back-End/Capstone-Back-End/db/migrations/20190131151531_users.js
+added file code
+npm run knex seed:make 01_users
+/Users/admin/Documents/Galvanize/Capstone/Back-End/Capstone-Back-End/db/seeds/01_users.js
+may have forgot this. npm run knex migrate:latest
+
+questions answered.
+
+1. did I need to make a 00_clean file first? 
+  This file is used to drop the database info and only needs to be created
+  once you intend on using this feature. look up other less comlicated examples as well. 
+2. why didnt my user file upload with the username and password columns by default when the seeds were created? 
+  This just creates the file but doesnt generate an real table date for the seeds that come from the migraction file. for
+  example the user seed file is not automatically created with a column titled password or username. Those still
+  have to be created manually. 
+3. whend do I add the indexedDB.js file into the db? 
+  that is a nessasary file that must be created to connect the knexfile.js to the db files to get the tables. 
+
+  Feb 1st
+
+1. wrote the first auth get route. waiting to test
+2. got a bcrypt password for the first user. the password is a 
+3. with the new change I have to reseed my database to get the password to work. 
+4. npm run knex migrate:latest  
+5. npm run knex seed:run  
+6. forgot to create index.js file. just created index.js file within the db folder. 
+
+Added this code in app.js so the auth files could work with the database info. 
+if(process.env.NODE_ENV !== 'production'){
+  require('dotenv').load()
+}
+
+Feb 5th
+
+found out how to add an authorization token in the Postman header. You need an authorization header then bearer token-string-no-quotes. Make sure to have the 
+space between bearer and the token so the authorization function can split the token out correctly. Also the function must us the split(' ') with the empty space
+to properly split the token out. I was able to find this issue with Rodger by console logging the credientials in controll/auth. 
+
+Changed local host for the backend to 5000
+added cors() to app.js file. error now is { status: 401, message: 'Unautorized 2' }
+
+
+Created my user routes and user controller crudes with some edits needed
+for more specific profile info. 
+
+Stuck on model users trying to get the get all function to work. I can console.log
+which shows the funciton seems to be working. I found out the issue.
+I needed to query the database with a promise function not a static function or non-promise dased function.
+DATE: thur 1:30 feb 7th.
+
