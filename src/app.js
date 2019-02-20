@@ -19,12 +19,19 @@ if(process.env.NODE_ENV !== 'production'){
 /////////////////////////// CREATE ROUTER HERE ////////////////////
 app.use('/users', require('./routes/users'))
 app.use('/auth', require('./routes/auth'))
+app.use('/requests', require('./routes/requests'))
+// app.use('/searchusers', require('./routes/searchusers'))
+// app.use('/sessions', require('./routes/sessions'))
+app.use('/queues', require('./routes/queues'))
+// app.use('/availability', require('./routes/availability'))
+
+
 // app.use('/users', require('./routes/users'))
 
 /////////////////////////// CREATE ROUTER HERE ////////////////////
 
 app.use((err, req, res, next) => {
-  // console.log(err)
+  console.log(err)
   const status = err.status || 500
   res.status(status).json({ error: err, message: 'app.js' })
 })
