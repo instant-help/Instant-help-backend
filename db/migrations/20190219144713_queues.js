@@ -3,7 +3,7 @@ const TABLE_NAME = 'queues'
 exports.up = function(knex, Promise) {
   return knex.schema.createTable(TABLE_NAME, function(table){
     table.increments('id')
-    table.string('helper_id').notNullable()
+    table.integer('helper_id').notNullable()
     table.integer('request_id').references('requests.id').onDelete('CASCADE').notNullable();
     table.timestamps(true, true)
   })

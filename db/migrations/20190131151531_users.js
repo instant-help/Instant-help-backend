@@ -14,7 +14,7 @@ exports.up = function(knex, Promise) {
     table.integer('zip')
     table.string('state')
     table.string('country')
-    table.integer('phone')
+    table.bigInteger('phone')
     table.string('description')
     table.string('tagline')
     table.string('image')

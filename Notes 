@@ -62,3 +62,22 @@ which shows the funciton seems to be working. I found out the issue.
 I needed to query the database with a promise function not a static function or non-promise dased function.
 DATE: thur 1:30 feb 7th.
 
+I build several local CRUD paths. Some are giving me errors 
+for updating and deleting. So I am getting something wrong.
+Unhandled rejection error: duplicate key value violates unique constraint "sessions_pkey"
+I needed to add this code in the seeds to solve the issue and allow create and update paths to start after the 
+seeded id's sequencial number. so instead of creating a table id of 1 
+it starts by addeding after the last id seed being 5 the new row gets an 
+id of 6.
+
+Unhandled rejection error: insert or update on table "queues" violates foreign key constraint "queues_request_id_foreign"
+this error happend because I didnt create the foreng key number in the
+request table first so the queue foreign key could properly reference the
+request table. 
+
+I deleted all my seed data during testing and tried to turn off and reboot my server to get it back and 
+learned that the proper way to restore the seed data is the rerun the command - npm run knex seed:run
+
+my integer table was too small to take a 10 digit phone number. So I updated the table to a bigInteger.
+I did migrate latest and seeds but it looks like I have to rollback
+npm run knex migrate:rollback

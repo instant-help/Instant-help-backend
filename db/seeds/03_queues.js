@@ -11,5 +11,9 @@ exports.seed = function(knex, Promise) {
         {id: 4, helper_id: 9, request_id: 4},
         {id: 5, helper_id: 8, request_id: 5},
       ]);
-    });
+    }).then(() => {
+      return knex.raw(
+        `SELECT setval('queues_id_seq', (SELECT MAX(id) FROM queues));`
+      )
+    })
 };

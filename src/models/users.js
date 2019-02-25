@@ -45,9 +45,19 @@ function newUser(username, password){
 }
 
 
-function updateUser(){
+function updateUser( id, update ){
 ///////////// NEED TO UPDATE THIS CODE ////////////////
-
+// console.log('user model user update 3')
+console.log(id, update)
+  return db('users')
+    .where({ id })
+    .update( update )
+    .returning(['*'])
+      .then( function (data){
+        // console.log('data',data)
+        // console.log(' //////////////////////// ')
+          return data
+        })
 }
 
 module.exports = { getOneByUserName, getAllUsers, getUser, deleteUser, newUser, updateUser }

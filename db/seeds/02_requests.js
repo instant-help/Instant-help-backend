@@ -11,5 +11,9 @@ exports.seed = function(knex, Promise) {
         {id: 4, user_id: 4, session_status: 'pending', description: ''},
         {id: 5, user_id: 5, session_status: 'pending', description: ''}
       ]);
-    });
+    }).then(() => {
+      return knex.raw(
+        `SELECT setval('requests_id_seq', (SELECT MAX(id) FROM requests));`
+      )
+    })
 };

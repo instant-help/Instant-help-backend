@@ -20,10 +20,8 @@ if(process.env.NODE_ENV !== 'production'){
 app.use('/users', require('./routes/users'))
 app.use('/auth', require('./routes/auth'))
 app.use('/requests', require('./routes/requests'))
-// app.use('/searchusers', require('./routes/searchusers'))
-// app.use('/sessions', require('./routes/sessions'))
+app.use('/sessions', require('./routes/sessions'))
 app.use('/queues', require('./routes/queues'))
-// app.use('/availability', require('./routes/availability'))
 
 
 // app.use('/users', require('./routes/users'))
