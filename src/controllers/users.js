@@ -1,5 +1,14 @@
 const modelsUsers = require('../models/users')
 
+function getAllOfferingHelp(req, res, next){
+  const limit = req.query.limit
+  modelsUsers.getAllOfferingHelp(limit).then(function(result){
+  if (!result) {
+    return next({ status: 404, message: 'No users were found,  - ctrl Offering help'})
+  }
+  res.status(200).send(result)
+  })
+}
 
 function getAllUsers(req, res, next){
   const limit = req.query.limit
@@ -54,30 +63,27 @@ function newUser(req, res, next){
 
 ///////////// NEED TO UPDATE THIS CODE ////////////////
 function updateUser(req, res, next){
-  console.log('user contoller user update 1')
   const id = req.params.id
-  console.log(id)
   if (!id) {
     return next ({ status: 400, message: 'The user cannot be found without an id.'})
   }
   if (!req.body) {
     return next ({ status: 400, message: 'Must attach a body to update a user'})
   }
-  console.log(req.body)
-  const { ...update } = req.body
-  console.log(update)
 
-  console.log('user contoller user update 2')
-  const result = modelsUsers.updateUser( id, update )
-  if (!result) {
-    return next({ status: 404, message: 'The user was not found so it was not updated'})
-  }
-  console.log('result', result)
-  console.log('user contoller user update 4')
-  res.status(201).send(result)
+  const { ...update } = req.body
+
+  modelsUsers.updateUser( id, update )
+  .then(result => {
+    if (!result) {
+      return next({ status: 404, message: 'The user was not found so it was not updated'})
+    }
+    res.status(201).send(result[0])
+  })
+  
 }
 ///////////// NEED TO UPDATE THIS CODE ////////////////
 
 
-module.exports = { getAllUsers, getUser, deleteUser, newUser, updateUser }
+module.exports = { getAllUsers, getUser, deleteUser, newUser, updateUser, getAllOfferingHelp }
 

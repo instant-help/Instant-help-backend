@@ -14,6 +14,26 @@ router.get('/', function(req, res, next){
   )
 })
 
+router.get('/current', function(req, res, next){
+  return (
+    db('requests')
+    .whereNot({ request_status: 'closed' })
+  ).then(function (data) {
+    res.send(data)
+  })
+})
+
+router.get('/current/:requsterUserID', function(req, res, next){
+  let userID = req.params.requsterUserID
+  return (
+    db('requests')
+    .where({user_id: userID })
+    .whereNot({ request_status: 'closed' })
+  ).then(function (data) {
+    res.send(data)
+  })
+})
+
 // working
 //gets all requests by request user id
 router.get('/user/:id', function(req, res, next){
@@ -48,7 +68,7 @@ router.get('/:id', function(req, res, next){
 // description and or session status conditionally
 router.put('/:id', function(req, res, next){
   let id = req.params.id
-  let status = req.body.session_status
+  let status = req.body.request_status
   let description = req.body.description
   console.log(id)
   let obj = {}
@@ -62,28 +82,27 @@ router.put('/:id', function(req, res, next){
     .where({id})
     .update({
       description: description,
-      session_status: status
+      request_status: status
     }).returning('*')
-    .then(function (data) {
+    .then( data => {
     res.send(data)
   })
 })
 
 //working 
 // uses username to get user id. 
-router.post('/', function(req, res, next){
-  let { description, username } = req.body
-  userModel.getOneByUserName(username)
-    .then(userinfo => {
+router.post('/:id', function(req, res, next){
+  let id = req.params.id
+  let description = req.body.description
+  console.log(description)
         return db('requests').insert({
-        user_id: userinfo.id,
+        user_id: id,
         description: description,
-        session_status: 'pending'
+        request_status: 'pending'
       }).returning('*')
       .then(function (data) {
       res.send(data)
     })
-  })
 })
 
 

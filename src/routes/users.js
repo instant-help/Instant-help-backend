@@ -4,7 +4,10 @@ const userController = require('../controllers/users')
 const db = require('../../db')
 
 // working
+router.get('/offeringhelp', userController.getAllOfferingHelp)
+
 router.get('/', userController.getAllUsers)
+
 // broken
 router.get('/:id', function(req, res, next){
   let id = req.params.id

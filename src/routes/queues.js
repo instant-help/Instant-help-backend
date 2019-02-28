@@ -21,6 +21,8 @@ router.post('/', function(req, res, next){
   )
 })
 
+
+
 // gets all users info
 // WORKING
 router.get('/', function(req, res, next){
@@ -79,6 +81,38 @@ router.delete('/all/:helperid', function(req, res, next){
     ).then(function (data) {
       res.send(data)
     })
+})
+
+// finally working!!!!!!!! 
+router.get('/allqueueprofiles/:helperid', function(req, res, next){
+  let id = req.params.helperid
+  return (
+    db('queues')
+    .where({helper_id: id})
+    .fullOuterJoin('requests', 'queues.request_id', 'requests.id')
+  )
+  .then(function (data1) {
+    const promises1 = data1.map( dataItem => {
+      return db('sessions').where('sessions.request_id', dataItem.request_id)
+        .then(function (data) {
+          dataItem.session = data
+            return dataItem 
+        })
+    })
+    return Promise.all(promises1)
+  })
+  .then(function (data2) {
+    const promises2 = data2.map( dataItem => {
+      return db('users').where('users.id', dataItem.user_id)
+        .then(function (data) {
+          dataItem.user_Requester = data
+            return dataItem 
+        })
+    })
+    return Promise.all(promises2)
+  }).then(function (data) {
+  res.send(data)
+  })
 })
 
 

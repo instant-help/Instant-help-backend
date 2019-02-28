@@ -6,7 +6,7 @@ exports.up = function(knex, Promise) {
     table.integer('user_id')
     // .references('users.id').onDelete('CASCADE').notNullable();
     table.string('description').notNullable()
-    table.string('session_status').notNullable()
+    table.string('request_status').notNullable()
     table.timestamps(true, true)
   })
 };

@@ -35,6 +35,8 @@ exports.up = function(knex, Promise) {
     table.string('codepen')
     table.string('codewars')
     table.string('queue_status')
+    table.string('online')
+
 
 
     table.timestamps(true, true)

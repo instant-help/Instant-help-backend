@@ -29,6 +29,34 @@ router.get('/:id', function(req, res, next){
   )
 })
 
+///////////////////////////////////////
+router.get('/active/:id', function(req, res, next){
+  let id = req.params.id
+  return (
+    db('sessions')
+    .where({
+      request_id: id 
+    })
+    .fullOuterJoin('requests', 'requests.id', 'sessions.request_id')
+    .then(function (data1) {
+      const promises1 = data1.map( dataItem => {
+        return db('users').where('users.id', dataItem.user_id)
+          .then(function (data) {
+            dataItem.user_Requester = data
+              return dataItem 
+          })
+      })
+      return Promise.all(promises1)
+    })
+
+
+
+    .then(function (data) {
+      res.send(data)
+    })
+  )
+})
+
 //working
 // updates session status
 router.put('/:id', function(req, res, next){

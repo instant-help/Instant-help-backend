@@ -14,6 +14,14 @@ function getAllUsers(limit){
   return limit ? db('users').slice(0, limit) : db('users')
 }
 
+function getAllOfferingHelp(limit){
+  return limit ? db('users').slice(0, limit) 
+  : db('users')
+  .where({ online: 'online'})
+  .andWhere({ queue_status: 'offering help' })
+  .orWhere({ queue_status: 'offering help in session' })
+}
+
 function getUser(username){
 ///////////// NEED TO UPDATE THIS CODE ////////////////
 
@@ -52,13 +60,13 @@ console.log(id, update)
   return db('users')
     .where({ id })
     .update( update )
-    .returning(['*'])
-      .then( function (data){
-        // console.log('data',data)
-        // console.log(' //////////////////////// ')
-          return data
-        })
+    .returning('*')
+      // .then( function (data){
+      //   // console.log('data',data)
+      //   // console.log(' //////////////////////// ')
+      //     return data
+      //   })
 }
 
-module.exports = { getOneByUserName, getAllUsers, getUser, deleteUser, newUser, updateUser }
+module.exports = { getOneByUserName, getAllUsers, getUser, deleteUser, newUser, updateUser, getAllOfferingHelp }
 
