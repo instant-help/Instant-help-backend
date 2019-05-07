@@ -88,6 +88,8 @@ router.get('/allqueueprofiles/:helperid', function(req, res, next){
   let id = req.params.helperid
   return (
     db('queues')
+    .select('queues.id as queues_id', 'request_id', 'user_id')
+
     .where({helper_id: id})
     .fullOuterJoin('requests', 'queues.request_id', 'requests.id')
   )

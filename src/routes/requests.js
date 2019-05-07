@@ -52,7 +52,6 @@ router.get('/user/:id', function(req, res, next){
 //gets request by request id
 router.get('/:id', function(req, res, next){
   let id = req.params.id
-  console.log(2)
   return (
     db('requests')
     .where({ id })

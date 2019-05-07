@@ -48,9 +48,6 @@ router.get('/active/:id', function(req, res, next){
       })
       return Promise.all(promises1)
     })
-
-
-
     .then(function (data) {
       res.send(data)
     })
@@ -60,12 +57,12 @@ router.get('/active/:id', function(req, res, next){
 //working
 // updates session status
 router.put('/:id', function(req, res, next){
-  let id = req.params.id
+  let requestId = req.params.id
   let status = req.body.session_status
-  console.log(id, status)
+  console.log(requestId, status)
   return db('sessions')
     .where({
-      request_id: id 
+      request_id: requestId 
     })
     .update({
       session_status: status
@@ -78,6 +75,7 @@ router.put('/:id', function(req, res, next){
 // created new session
 router.post('/', function(req, res, next){
   let { request_id, queue_id } = req.body
+  console.log(request_id, queue_id)
   return db('sessions')
     .insert({
       request_id: request_id,

@@ -35,7 +35,7 @@ app.use((err, req, res, next) => {
 })
 
 app.use((req, res, next) => {
-  // console.log(req)
+  console.log(req)
   res.status(404).json({ error: { message: 'Not Found app.js' }})
 })
 

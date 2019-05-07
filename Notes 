@@ -81,3 +81,8 @@ learned that the proper way to restore the seed data is the rerun the command - 
 my integer table was too small to take a 10 digit phone number. So I updated the table to a bigInteger.
 I did migrate latest and seeds but it looks like I have to rollback
 npm run knex migrate:rollback
+
+
+npm run knex seed:run
+
+npm run knex seed:run
