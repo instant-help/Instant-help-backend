@@ -27,7 +27,7 @@ router.post('/', function(req, res, next){
 // WORKING
 router.get('/', function(req, res, next){
   return (
-    db('queues')
+    db('queues').whereNull('deleted_at')
     .then(function (data) {
       res.send(data)
     })
@@ -41,6 +41,7 @@ router.get('/helper/:id', function(req, res, next){
   return (
     db('queues')
     .where({helper_id: id})
+    .whereNull('deleted_at')
     .then(function (data) {
       res.send(data)
     })
@@ -53,6 +54,7 @@ router.get('/request/:id', function(req, res, next){
   return (
     db('queues')
     .where({request_id: id})
+    .whereNull('deleted_at')
     .then(function (data) {
       res.send(data)
     })
@@ -124,7 +126,8 @@ router.delete('/:requestid', function(req, res, next){
   return (
     db('queues')
     .where({request_id: id})
-    .del()
+    // .del()
+    .update({deleted_at: new Date()})
     .returning('*')
     ).then(function (data) {
       res.send(data)
