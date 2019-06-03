@@ -89,7 +89,7 @@ router.delete('/all/:helperid', function(req, res, next){
 router.get('/allqueueprofiles/:helperid', function(req, res, next){
   let id = req.params.helperid
   return (
-    db('queues')
+    db('queues').whereNull('deleted_at')
     .select('queues.id as queues_id', 'request_id', 'user_id')
 
     .where({helper_id: id})
