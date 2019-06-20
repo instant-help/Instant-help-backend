@@ -120,6 +120,60 @@ router.get('/allqueueprofiles/:helperid', function(req, res, next){
 })
 
 
+router.get('/helpersSessionFromQueue/:helperid', function(req, res, next){
+
+  let id = req.params.helperid
+  
+  function getHelperSessionFromQueue(id) {
+  return( 
+    db('queues').whereNull('deleted_at')
+    .select('queues.id as queues_id', 'request_id', 'user_id')
+    .where({helper_id: id})
+    .fullOuterJoin('requests', 'queues.request_id', 'requests.id')
+  )
+  .then(function (data1) {
+    const promises1 = data1.map( dataItem => {
+      return db('sessions').where('sessions.request_id', dataItem.request_id)
+        .then(function (data) {
+          dataItem.session = data
+            return dataItem 
+        })
+    })
+    return Promise.all(promises1)
+  })
+  .then(function (data2) {
+    const promises2 = data2.map (dataItem2 => {
+      return db('requests').where('requests.id', dataItem2.request_id)
+        .then(function (data) {
+          dataItem2.request = data
+            return dataItem2
+        })
+    })
+    return Promise.all(promises2)
+
+  })
+  }
+
+  function getActiveSessionInfo(queueData){
+    for (const queue of queueData ) {
+      if (queue.request[0].request_status === 'in session') {
+        return queue.request[0].id
+      }
+    }
+  }
+
+  getHelperSessionFromQueue(id)
+  // console.log(result)
+
+  .then(function (data) {
+    console.log(data)
+    
+    res.send({id: getActiveSessionInfo(data)})
+    })
+  
+})
+  
+
 // WORKING
 router.delete('/:requestid', function(req, res, next){
   let id = req.params.requestid

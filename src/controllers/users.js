@@ -35,7 +35,7 @@ function deleteUser(req, res, next){
   const id = req.params.id
   const result = modelsUsers.deleteCar(id)
   if (!result) {
-    return next({ status: 404, message: 'The car was not found so it was not deleted, ctrl-users 3'})
+    return next({ status: 404, message: 'The user was not found so it was not deleted, ctrl-users 3'})
   }
   res.status(200).send(result)
 }

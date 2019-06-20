@@ -4,7 +4,6 @@ const router = express.Router()
 const db = require('../../db')
 
 // get all sessions
-// working
 router.get('/', function(req, res, next){
   return (
     db('sessions')
@@ -15,7 +14,6 @@ router.get('/', function(req, res, next){
 })
 
 // get by request id
-// working
 router.get('/:id', function(req, res, next){
   let id = req.params.id
   return (
