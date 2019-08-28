@@ -2,25 +2,25 @@ const express = require('express')
 const router = express.Router()
 const requestsController = require('../controllers/requests')
 
-// gets all requests
+// Gets all Requests
 router.get('/', requestsController.getAllRequests)
 
-// gets all current requests
+// Gets all current Requests
 router.get('/current', requestsController.getAllCurrentReqeusts)
 
-// gets current request by the reqeusters User id
-router.get('/current/:requsterUserID', requestsController.getCurrentReqeustsByUserID)
+// Gets current Request by the Reqeusters User id
+router.get('/current/:requsterUserID', requestsController.getCurrentReqeustsByUser_ID)
 
-// gets request but user id 
-router.get('/user/:id', requestsController.getRequestByUserID)
+// Gets Request by User id 
+router.get('/user/:id', requestsController.getRequestByUser_ID)
 
-// gets request but request id
-router.get('/:id', requestsController.getRequestsByRequestID)
+// Gets Request by Request id
+router.get('/:id', requestsController.getRequestsByRequest_ID)
 
-// updates request by request id
-router.put('/:id', requestsController.updateRequestByRequestID)
+// Updates Request by Request id
+router.put('/:id', requestsController.updateRequestByRequest_ID)
 
-// creates a new request
+// Creates a new Request
 router.post('/:id', requestsController.createRequest)
 
 module.exports = router

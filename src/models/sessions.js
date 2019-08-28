@@ -6,20 +6,20 @@ function getAllSessions() {
   )
 }
 
-function getSessionByRequest_id(request_id) {
+function getSessionByRequest_ID(request_id) {
   return (
     db('sessions')
     .where({
-      request_id: request_id
+      request_id
     })
   )
 }
 
-function getActiveSessionByRequest_id(request_id) {
+function getActiveSessionByRequest_ID(request_id) {
   return (
     db('sessions')
     .where({
-      request_id: request_id
+      request_id
     })
     .fullOuterJoin('requests', 'requests.id', 'sessions.request_id')
     .then(function (data1) {
@@ -35,14 +35,14 @@ function getActiveSessionByRequest_id(request_id) {
   )
 }
 
-function updateSessionByRequest_id(request_id, session_status) {
+function updateSessionByRequest_ID(request_id, session_status) {
   return (
     db('sessions')
     .where({
-      request_id: request_id
+      request_id
     })
     .update({
-      session_status: session_status
+      session_status
     }).returning('*')
   )
 }
@@ -51,8 +51,8 @@ function createSession(request_id, queue_id) {
   return (
     db('sessions')
     .insert({
-      request_id: request_id,
-      queue_id: queue_id,
+      request_id,
+      queue_id,
       session_status: "started"
     }).returning('*')
   )
@@ -60,8 +60,8 @@ function createSession(request_id, queue_id) {
 
 module.exports = {
   getAllSessions,
-  getSessionByRequest_id,
-  getActiveSessionByRequest_id,
-  updateSessionByRequest_id,
+  getSessionByRequest_ID,
+  getActiveSessionByRequest_ID,
+  updateSessionByRequest_ID,
   createSession
 }

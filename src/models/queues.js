@@ -7,7 +7,7 @@ function getAllQueue() {
   )
 }
 
-function getQueueByHelperID(helper_id) {
+function getQueueByHelper_ID(helper_id) {
   return (
     db('queues')
     .where({
@@ -17,7 +17,7 @@ function getQueueByHelperID(helper_id) {
   )
 }
 
-function getQueueByRequestID(request_id) {
+function getQueueByRequest_ID(request_id) {
   return (
     db('queues')
     .where({
@@ -27,7 +27,7 @@ function getQueueByRequestID(request_id) {
   )
 }
 
-function getAllRequesterProfilesInQueueByHelperID(helper_id) {
+function getAllRequesterProfilesInQueueByHelper_ID(helper_id) {
   return (
       db('queues')
       .whereNull('deleted_at')
@@ -61,7 +61,7 @@ function getAllRequesterProfilesInQueueByHelperID(helper_id) {
     })
 }
 
-function getHelperSessionsFromQueueByHelperID(helper_id) {
+function getHelperSessionsFromQueueByHelper_ID(helper_id) {
   return (
       db('queues')
       .whereNull('deleted_at')
@@ -99,17 +99,17 @@ function createQueue(helper_id, request_id) {
   return (
     db('queues')
     .insert({
-      helper_id: helper_id,
-      request_id: request_id
+      helper_id,
+      request_id
     }).returning('*')
   )
 }
 
-function deleteQueueByRequest_id(request_id) {
+function deleteQueueByRequest_ID(request_id) {
   return (
     db('queues')
     .where({
-      request_id: request_id
+      request_id
     })
     .update({
       deleted_at: new Date()
@@ -122,10 +122,10 @@ function deleteQueueByRequest_id(request_id) {
 
 module.exports = {
   getAllQueue,
-  getQueueByHelperID,
-  getQueueByRequestID,
-  getAllRequesterProfilesInQueueByHelperID,
-  getHelperSessionsFromQueueByHelperID,
+  getQueueByHelper_ID,
+  getQueueByRequest_ID,
+  getAllRequesterProfilesInQueueByHelper_ID,
+  getHelperSessionsFromQueueByHelper_ID,
   createQueue,
-  deleteQueueByRequest_id
+  deleteQueueByRequest_ID
 }

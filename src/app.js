@@ -15,11 +15,11 @@ if (process.env.NODE_ENV !== 'production') {
   require('dotenv').load()
 }
 
-app.use('/users', require('./routes/users'))
 app.use('/auth', require('./routes/auth'))
+app.use('/users', require('./routes/users'))
 app.use('/requests', require('./routes/requests'))
-app.use('/sessions', require('./routes/sessions'))
 app.use('/queues', require('./routes/queues'))
+app.use('/sessions', require('./routes/sessions'))
 
 app.use((err, req, res, next) => {
   console.log(err)

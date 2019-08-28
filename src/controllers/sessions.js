@@ -13,7 +13,7 @@ function getAllSessions(req, res, next) {
     })
 }
 
-function getSessionByRequest_id(req, res, next) {
+function getSessionByRequest_ID(req, res, next) {
   let request_id = req.params.id
   if (!request_id) {
     return next({
@@ -21,7 +21,7 @@ function getSessionByRequest_id(req, res, next) {
       message: 'No request id, cannot get session'
     })
   }
-  modelsSessions.getSessionByRequest_id(request_id)
+  modelsSessions.getSessionByRequest_ID(request_id)
     .then(function (result) {
       if (!result) {
         return next({
@@ -33,7 +33,7 @@ function getSessionByRequest_id(req, res, next) {
     })
 }
 
-function getActiveSessionByRequest_id(req, res, next) {
+function getActiveSessionByRequest_ID(req, res, next) {
   let request_id = req.params.id
   if (!request_id) {
     return next({
@@ -41,7 +41,7 @@ function getActiveSessionByRequest_id(req, res, next) {
       message: 'No request id, cannot get session'
     })
   }
-  modelsSessions.getActiveSessionByRequest_id(request_id)
+  modelsSessions.getActiveSessionByRequest_ID(request_id)
     .then(function (result) {
       if (!result) {
         return next({
@@ -53,7 +53,7 @@ function getActiveSessionByRequest_id(req, res, next) {
     })
 }
 
-function updateSessionByRequest_id(req, res, next) {
+function updateSessionByRequest_ID(req, res, next) {
   let request_id = req.params.id
   let session_status = req.body.session_status
   if (!request_id) {
@@ -68,7 +68,7 @@ function updateSessionByRequest_id(req, res, next) {
       message: 'No session status, cannot update session'
     })
   }
-  modelsSessions.updateSessionByRequest_id(request_id, session_status)
+  modelsSessions.updateSessionByRequest_ID(request_id, session_status)
     .then(function (result) {
       if (!result) {
         return next({
@@ -76,7 +76,7 @@ function updateSessionByRequest_id(req, res, next) {
           message: 'No updated session results found'
         })
       }
-      res.status(200).send(result)
+      res.status(201).send(result)
     })
 }
 
@@ -105,7 +105,7 @@ function createSession(req, res, next) {
           message: 'No created session results found'
         })
       }
-      res.status(200).send(result)
+      res.status(201).send(result)
     })
 }
 
@@ -113,8 +113,8 @@ function createSession(req, res, next) {
 
 module.exports = {
   getAllSessions,
-  getSessionByRequest_id,
-  getActiveSessionByRequest_id,
-  updateSessionByRequest_id,
+  getSessionByRequest_ID,
+  getActiveSessionByRequest_ID,
+  updateSessionByRequest_ID,
   createSession
 }

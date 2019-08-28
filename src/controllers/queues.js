@@ -13,7 +13,7 @@ function getAllQueue(req, res, next) {
     })
 }
 
-function getQueueByHelperID(req, res, next) {
+function getQueueByHelper_ID(req, res, next) {
   let helper_id = req.params.id
   if (!helper_id) {
     return next({
@@ -21,7 +21,7 @@ function getQueueByHelperID(req, res, next) {
       message: 'No helper id, cannot get queue information'
     })
   }
-  modelsQueues.getQueueByHelperID(helper_id)
+  modelsQueues.getQueueByHelper_ID(helper_id)
     .then(function (result) {
       if (!result) {
         return next({
@@ -33,7 +33,7 @@ function getQueueByHelperID(req, res, next) {
     })
 }
 
-function getQueueByRequestID(req, res, next) {
+function getQueueByRequest_ID(req, res, next) {
   let request_id = req.params.id
   if (!request_id) {
     return next({
@@ -41,7 +41,7 @@ function getQueueByRequestID(req, res, next) {
       message: 'No request id, cannot get queue information'
     })
   }
-  modelsQueues.getQueueByRequestID(request_id)
+  modelsQueues.getQueueByRequest_ID(request_id)
     .then(function (result) {
       if (!result) {
         return next({
@@ -53,7 +53,7 @@ function getQueueByRequestID(req, res, next) {
     })
 }
 
-function getAllRequesterProfilesInQueueByHelperID(req, res, next) {
+function getAllRequesterProfilesInQueueByHelper_ID(req, res, next) {
   let helper_id = req.params.helper_id
   if (!helper_id) {
     return next({
@@ -61,7 +61,7 @@ function getAllRequesterProfilesInQueueByHelperID(req, res, next) {
       message: 'No helper id, cannot get queue information'
     })
   }
-  modelsQueues.getAllRequesterProfilesInQueueByHelperID(helper_id)
+  modelsQueues.getAllRequesterProfilesInQueueByHelper_ID(helper_id)
     .then(function (result) {
       if (!result) {
         return next({
@@ -73,7 +73,7 @@ function getAllRequesterProfilesInQueueByHelperID(req, res, next) {
     })
 }
 
-function getHelperSessionsFromQueueByHelperID(req, res, next) {
+function getHelperSessionsFromQueueByHelper_ID(req, res, next) {
   let helper_id = req.params.helper_id
   if (!helper_id) {
     return next({
@@ -81,7 +81,7 @@ function getHelperSessionsFromQueueByHelperID(req, res, next) {
       message: 'No helper id, cannot get queue information'
     })
   }
-  modelsQueues.getHelperSessionsFromQueueByHelperID(helper_id)
+  modelsQueues.getHelperSessionsFromQueueByHelper_ID(helper_id)
     .then(function (result) {
       if (!result) {
         return next({
@@ -126,7 +126,7 @@ function createQueue(req, res, next) {
     })
 }
 
-function deleteQueueByRequest_id(req, res, next) {
+function deleteQueueByRequest_ID(req, res, next) {
   let request_id = req.params.request_id
   if (!request_id) {
     return next({
@@ -134,7 +134,7 @@ function deleteQueueByRequest_id(req, res, next) {
       message: 'No request id, cannot delete to queue'
     })
   }
-  modelsQueues.deleteQueueByRequest_id(request_id)
+  modelsQueues.deleteQueueByRequest_ID(request_id)
     .then(function (result) {
       if (!result) {
         return next({
@@ -150,10 +150,10 @@ function deleteQueueByRequest_id(req, res, next) {
 
 module.exports = {
   getAllQueue,
-  getQueueByHelperID,
-  getQueueByRequestID,
-  getAllRequesterProfilesInQueueByHelperID,
-  getHelperSessionsFromQueueByHelperID,
+  getQueueByHelper_ID,
+  getQueueByRequest_ID,
+  getAllRequesterProfilesInQueueByHelper_ID,
+  getHelperSessionsFromQueueByHelper_ID,
   createQueue,
-  deleteQueueByRequest_id
+  deleteQueueByRequest_ID
 }

@@ -15,11 +15,11 @@ function getAllCurrentReqeusts() {
   )
 }
 
-function getCurrentReqeustsByUserID(user_id) {
+function getCurrentReqeustsByUser_ID(user_id) {
   return (
     db('requests')
     .where({
-      user_id: user_id
+      user_id
     })
     .whereNot({
       request_status: 'closed'
@@ -27,7 +27,7 @@ function getCurrentReqeustsByUserID(user_id) {
   )
 }
 
-function getRequestByUserID(user_id) {
+function getRequestByUser_ID(user_id) {
   return (
     db('requests')
     .where({
@@ -36,7 +36,7 @@ function getRequestByUserID(user_id) {
   )
 }
 
-function getRequestsByRequestID(request_id) {
+function getRequestsByRequest_ID(request_id) {
   return (
     db('requests')
     .where({
@@ -45,14 +45,14 @@ function getRequestsByRequestID(request_id) {
   )
 }
 
-function updateRequestByRequestID(request_id, description, status) {
+function updateRequestByRequest_ID(request_id, description, request_status) {
   return (
     db('requests')
     .where({
       id: request_id
     })
     .update({
-      description: description,
+      description,
       request_status: status
     })
     .returning('*')
@@ -62,8 +62,8 @@ function updateRequestByRequestID(request_id, description, status) {
 function createRequest(user_id, description) {
   return (
     db('requests').insert({
-      user_id: user_id,
-      description: description,
+      user_id,
+      description,
       request_status: 'pending'
     }).returning('*')
   )
@@ -72,9 +72,9 @@ function createRequest(user_id, description) {
 module.exports = {
   getAllRequests,
   getAllCurrentReqeusts,
-  getCurrentReqeustsByUserID,
-  getRequestByUserID,
-  getRequestsByRequestID,
-  updateRequestByRequestID,
+  getCurrentReqeustsByUser_ID,
+  getRequestByUser_ID,
+  getRequestsByRequest_ID,
+  updateRequestByRequest_ID,
   createRequest
 }

@@ -7,27 +7,27 @@ function getAllUsers(req, res, next) {
     if (!result) {
       return next({
         status: 404,
-        message: 'No users were found,  - ctrl-users 1'
+        message: 'No users were found'
       })
     }
     res.status(200).send(result)
   })
 }
 
-function getUserByUser_id(req, res, next) {
+function getUserByUser_ID(req, res, next) {
   const user_Id = req.params.id
   if (!user_Id) {
     return next({
       status: 400,
-      message: 'You need to provide an user id, ctrl-users 2'
+      message: 'You need to provide an user id'
     })
   }
-  modelsUsers.getUserByUser_id(user_Id)
+  modelsUsers.getUserByUser_ID(user_Id)
     .then(function (result) {
       if (!result) {
         return next({
-          status: 400,
-          message: 'You result found for User'
+          status: 404,
+          message: 'You result found for user'
         })
       }
       res.status(200).send(result)
@@ -37,12 +37,12 @@ function getUserByUser_id(req, res, next) {
 
 function getAllOfferingHelp(req, res, next) {
   const limit = req.query.limit
-  modelsUsers.getAllOfferingHelp()
+  modelsUsers.getAllOfferingHelp(limit)
     .then(function (result) {
       if (!result) {
         return next({
           status: 404,
-          message: 'No users were found,  - ctrl Offering help'
+          message: 'No users were found'
         })
       }
       res.status(200).send(result)
@@ -87,17 +87,23 @@ function newUser(req, res, next) {
   if (!username) {
     return next({
       status: 400,
-      message: 'The user was not created. Bad username!, ctrl-users 4'
+      message: 'The user was not created.'
     })
   }
   if (!password) {
     return next({
       status: 400,
-      message: 'The user was not created. Needs a password!, ctrl-users 5'
+      message: 'The user was not created.'
     })
   }
   modelsUsers.newUser(username, password)
     .then(function (result) {
+      if (!result){
+        return next({
+          status: 400,
+          message: 'The user was not created.'
+        })
+      }
       return res.status(201).send(result)
     })
     .catch(next)
@@ -116,7 +122,7 @@ function deleteUser(req, res, next) {
 }
 module.exports = {
   getAllUsers,
-  getUserByUser_id,
+  getUserByUser_ID,
   getAllOfferingHelp,
   newUser,
   updateUser,

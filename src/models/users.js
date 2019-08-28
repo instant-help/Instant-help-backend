@@ -5,7 +5,7 @@ function getOneByUserName(username) {
   return (
     db('users')
     .where({
-      username: username
+      username
     })
     .first()
   )
@@ -16,7 +16,8 @@ function getAllUsers(limit) {
 }
 
 function getAllOfferingHelp(limit) {
-  return limit ? db('users').slice(0, limit) :
+  return (
+    limit ? db('users').slice(0, limit) :
     db('users')
     .where({
       online: 'online'
@@ -27,9 +28,10 @@ function getAllOfferingHelp(limit) {
     .orWhere({
       queue_status: 'offering help in session'
     })
+  )
 }
 
-function getUserByUser_id(user_id) {
+function getUserByUser_ID(user_id) {
   return (
     db('users')
     .where({
@@ -39,7 +41,8 @@ function getUserByUser_id(user_id) {
 }
 
 function newUser(username, password) {
-  return getOneByUserName(username)
+  return (
+    getOneByUserName(username)
     .then(function (data) {
       if (data) throw {
         status: 400,
@@ -61,20 +64,23 @@ function newUser(username, password) {
       delete data.password
       return data
     })
+  )
 }
 
 function updateUser(id, update) {
-  return db('users')
+  return (
+    db('users')
     .where({
       id
     })
     .update(update)
     .returning('*')
+  )
 }
 
 module.exports = {
   getOneByUserName,
-  getUserByUser_id,
+  getUserByUser_ID,
   getAllUsers,
   newUser,
   updateUser,

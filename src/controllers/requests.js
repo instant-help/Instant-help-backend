@@ -6,7 +6,7 @@ function getAllRequests(req, res, next) {
       if (!result) {
         return next({
           status: 404,
-          message: 'No users were found,  - ctrl-users 1'
+          message: 'No users were found'
         })
       }
       res.status(200).send(result)
@@ -26,15 +26,15 @@ function getAllCurrentReqeusts(req, res, next) {
     })
 }
 
-function getCurrentReqeustsByUserID(req, res, next) {
+function getCurrentReqeustsByUser_ID(req, res, next) {
   let user_id = req.params.requsterUserID
   if (!user_id) {
     return next({
-      status: 404,
+      status: 400,
       message: 'No user id'
     })
   }
-  modelsRequests.getCurrentReqeustsByUserID(user_id)
+  modelsRequests.getCurrentReqeustsByUser_ID(user_id)
     .then(function (result) {
       if (!result) {
         return next({
@@ -46,15 +46,15 @@ function getCurrentReqeustsByUserID(req, res, next) {
     })
 }
 
-function getRequestByUserID(req, res, next) {
+function getRequestByUser_ID(req, res, next) {
   let user_id = req.params.id
   if (!user_id) {
     return next({
-      status: 404,
+      status: 400,
       message: 'No user id, cannont get information'
     })
   }
-  modelsRequests.getRequestByUserID(user_id)
+  modelsRequests.getRequestByUser_ID(user_id)
     .then(function (result) {
       if (!result) {
         return next({
@@ -66,15 +66,15 @@ function getRequestByUserID(req, res, next) {
     })
 }
 
-function getRequestsByRequestID(req, res, next) {
+function getRequestsByRequest_ID(req, res, next) {
   let request_id = req.params.id
   if (!request_id) {
     return next({
-      status: 404,
+      status: 400,
       message: 'No request id, cannot get information'
     })
   }
-  modelsRequests.getRequestsByRequestID(request_id)
+  modelsRequests.getRequestsByRequest_ID(request_id)
     .then(function (result) {
       if (!result) {
         return next({
@@ -86,24 +86,23 @@ function getRequestsByRequestID(req, res, next) {
     })
 }
 
-function updateRequestByRequestID(req, res, next) {
+function updateRequestByRequest_ID(req, res, next) {
   let request_id = req.params.id
   let description = req.body.description
-  let status = req.body.request_status
-
+  let request_status = req.body.request_status
   if (!request_id) {
     return next({
-      status: 404,
+      status: 400,
       message: 'No request id, cannot get information'
     })
   }
-  if (!description && !status) {
+  if (!description && !request_status) {
     return next({
-      status: 404,
+      status: 400,
       message: 'No description or status was provided, cannot update request'
     })
   }
-  modelsRequests.updateRequestByRequestID(request_id, description, status)
+  modelsRequests.updateRequestByRequest_ID(request_id, description, request_status)
     .then(function (result) {
       if (!result) {
         return next({
@@ -111,7 +110,7 @@ function updateRequestByRequestID(req, res, next) {
           message: 'No resutls found'
         })
       }
-      res.status(200).send(result)
+      res.status(201).send(result)
     })
 }
 
@@ -120,13 +119,13 @@ function createRequest(req, res, next) {
   let description = req.body.description
   if (!user_ID) {
     return next({
-      status: 404,
+      status: 400,
       message: 'No user id, cannot create request'
     })
   }
   if (!description) {
     return next({
-      status: 404,
+      status: 400,
       message: 'No description cannot create request'
     })
   }
@@ -138,16 +137,16 @@ function createRequest(req, res, next) {
           message: 'Request not created'
         })
       }
-      res.status(200).send(result)
+      res.status(201).send(result)
     })
 }
 
 module.exports = {
   getAllRequests,
   getAllCurrentReqeusts,
-  getCurrentReqeustsByUserID,
-  getRequestByUserID,
-  getRequestsByRequestID,
-  updateRequestByRequestID,
+  getCurrentReqeustsByUser_ID,
+  getRequestByUser_ID,
+  getRequestsByRequest_ID,
+  updateRequestByRequest_ID,
   createRequest
 }
