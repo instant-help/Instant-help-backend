@@ -1,58 +1,82 @@
 const db = require('../../db')
 const bcrypt = require('bcrypt')
 
-function getOneByUserName(username){
+function getOneByUserName(username) {
   return (
     db('users')
-    .where({ username: username })
+    .where({
+      username: username
+    })
     .first()
   )
 }
 
-function getAllUsers(limit){
+function getAllUsers(limit) {
   return limit ? db('users').slice(0, limit) : db('users')
 }
 
-function getAllOfferingHelp(limit){
-  return limit ? db('users').slice(0, limit) 
-  : db('users')
-  .where({ online: 'online'})
-  .andWhere({ queue_status: 'offering help' })
-  .orWhere({ queue_status: 'offering help in session' })
+function getAllOfferingHelp(limit) {
+  return limit ? db('users').slice(0, limit) :
+    db('users')
+    .where({
+      online: 'online'
+    })
+    .andWhere({
+      queue_status: 'offering help'
+    })
+    .orWhere({
+      queue_status: 'offering help in session'
+    })
 }
 
-function getUserByUser_id(user_id){
+function getUserByUser_id(user_id) {
   return (
-  db('users')
-  .where({ id: user_id })
+    db('users')
+    .where({
+      id: user_id
+    })
   )
 }
 
-function newUser(username, password){
+function newUser(username, password) {
   return getOneByUserName(username)
-    .then(function(data){
-      if(data) throw { status: 400, message:'Username already exists'}
+    .then(function (data) {
+      if (data) throw {
+        status: 400,
+        message: 'Username already exists'
+      }
       return bcrypt.hash(password, 10)
     })
-    .then(function(hashedPassword){
+    .then(function (hashedPassword) {
       return (
         db('users')
-        .insert({ username, password: hashedPassword })
+        .insert({
+          username,
+          password: hashedPassword
+        })
         .returning('*')
       )
     })
-    .then(function([ data ]){
+    .then(function ([data]) {
       delete data.password
       return data
     })
 }
 
-function updateUser( id, update ){
+function updateUser(id, update) {
   return db('users')
-    .where({ id })
-    .update( update )
+    .where({
+      id
+    })
+    .update(update)
     .returning('*')
 }
 
-module.exports = { getOneByUserName,getUserByUser_id, getAllUsers, newUser, updateUser, getAllOfferingHelp }
-
+module.exports = {
+  getOneByUserName,
+  getUserByUser_id,
+  getAllUsers,
+  newUser,
+  updateUser,
+  getAllOfferingHelp
+}

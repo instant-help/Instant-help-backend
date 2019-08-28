@@ -25,7 +25,7 @@ const queuesController = require('../controllers/queues')
 // Creates a Queue
 router.post('/', queuesController.createQueue)
 
-// WORKING
+// WORKING 
 // router.get('/', function(req, res, next){
 //   return (
 //     db('queues').whereNull('deleted_at')
@@ -161,7 +161,7 @@ router.get('/helpersSessionFromQueue/:helper_id', queuesController.getHelperSess
 //   getHelperSessionFromQueue(id)
 //   .then(function (data) {
 //     console.log(data)
-    
+
 //     res.send({id: getActiveSessionInfo(data)})
 //     })
 // })
@@ -184,30 +184,32 @@ router.get('/helpersSessionFromQueue/:helper_id', queuesController.getHelperSess
 // working
 // Updates a Queue as deleted. 
 // Does not actually delete form database just marks the queue as deleted. 
-router.delete('/:request_id', queuesController.deleteQueueByRequest_id )
+router.delete('/:request_id', queuesController.deleteQueueByRequest_id)
 
 // WORKING - Not nessassary for MVC
-router.delete('/all', function(req, res, next){
+router.delete('/all', function (req, res, next) {
   return (
     db('queues')
     .del()
     .returning('*')
-    ).then(function (data) {
-      res.send(data)
-    })
+  ).then(function (data) {
+    res.send(data)
+  })
 })
 
 // WORKING - Not nessassary for MVC
-router.delete('/all/:helperid', function(req, res, next){
+router.delete('/all/:helperid', function (req, res, next) {
   let id = req.params.helperid
   return (
     db('queues')
-    .where({helper_id: id})
+    .where({
+      helper_id: id
+    })
     .del()
     .returning('*')
-    ).then(function (data) {
-      res.send(data)
-    })
+  ).then(function (data) {
+    res.send(data)
+  })
 })
 
 module.exports = router
