@@ -4,6 +4,7 @@ const userModel = require('./users')
 
 function login(username, password){
   let user
+  console.log(username, password)
   return userModel.getOneByUserName(username)
   .then(function(data){
     if(!data) throw { status: 400, message: 'Bad Request Model-Auth 1'}

@@ -1,42 +1,20 @@
 const express = require('express')
 const router = express.Router()
 const userController = require('../controllers/users')
-const db = require('../../db')
 
-// working
-router.get('/offeringhelp', userController.getAllOfferingHelp)
-
+// Gets a list of all users
 router.get('/', userController.getAllUsers)
 
-// broken
-router.get('/:id', function(req, res, next){
-  let id = req.params.id
-  return db('users')
-    .where({ id })
-    .then( function (data){
-      res.send(data)
-    })
-})
-// broken working
-// i can get this to delete but i cant get it to 
-// return anything without causing an error
-router.delete('/:id', function(req, res, next){
-  let id = req.params.id
-  return db('users')
-    .where({ id })
-    .returning('*')
-    .del()
-    .then( function (data){
-      res.send(data)
-    })
+// gets a list of Users that are currently offering help
+router.get('/offeringhelp', userController.getAllOfferingHelp)
 
-    // .then( function (data){
-    //   res.send(data)
-    // })
-})
-// broken
+// Gets a Users profile information
+router.get('/:id', userController.getUserByUser_id)
+
+// Creates a new user
 router.post('/', userController.newUser)
-// broken
+
+// Updates User information by User id
 router.put('/:id', userController.updateUser)
 
 module.exports = router

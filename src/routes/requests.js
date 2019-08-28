@@ -1,108 +1,26 @@
 const express = require('express')
 const router = express.Router()
-const db = require('../../db')
-const userModel = require('../models/users')
+const requestsController = require('../controllers/requests')
 
-// gets all users info
-//  working
-router.get('/', function(req, res, next){
-  return (
-    db('requests')
-    .then(function (data) {
-      res.send(data)
-    })
-  )
-})
+// gets all requests
+router.get('/', requestsController.getAllRequests)
 
-router.get('/current', function(req, res, next){
-  return (
-    db('requests')
-    .whereNot({ request_status: 'closed' })
-  ).then(function (data) {
-    res.send(data)
-  })
-})
+// gets all current requests
+router.get('/current', requestsController.getAllCurrentReqeusts)
 
-router.get('/current/:requsterUserID', function(req, res, next){
-  let userID = req.params.requsterUserID
-  return (
-    db('requests')
-    .where({user_id: userID })
-    .whereNot({ request_status: 'closed' })
-  ).then(function (data) {
-    res.send(data)
-  })
-})
+// gets current request by the reqeusters User id
+router.get('/current/:requsterUserID', requestsController.getCurrentReqeustsByUserID)
 
-// working
-//gets all requests by request user id
-router.get('/user/:id', function(req, res, next){
-  let id = req.params.id
-  console.log(1)
-  return (
-    db('requests')
-    .where({ user_id: id})
-    .then(function (data) {
-      res.send(data)
-    })
-  )
-})
+// gets request but user id 
+router.get('/user/:id', requestsController.getRequestByUserID)
 
-// working
-//gets request by request id
-router.get('/:id', function(req, res, next){
-  let id = req.params.id
-  return (
-    db('requests')
-    .where({ id })
-    .then(function (data) {
-      res.send(data)
-    })
-  )
-})
+// gets request but request id
+router.get('/:id', requestsController.getRequestsByRequestID)
 
+// updates request by request id
+router.put('/:id', requestsController.updateRequestByRequestID)
 
-
-//updates router
-// description and or session status conditionally
-router.put('/:id', function(req, res, next){
-  let id = req.params.id
-  let status = req.body.request_status
-  let description = req.body.description
-  console.log(id)
-  let obj = {}
-  if (description){
-    obj.description = description
-  }
-  if (status){
-    obj.status = status
-  }
-  return db('requests')
-    .where({id})
-    .update({
-      description: description,
-      request_status: status
-    }).returning('*')
-    .then( data => {
-    res.send(data)
-  })
-})
-
-//working 
-// uses username to get user id. 
-router.post('/:id', function(req, res, next){
-  let id = req.params.id
-  let description = req.body.description
-  console.log(description)
-        return db('requests').insert({
-        user_id: id,
-        description: description,
-        request_status: 'pending'
-      }).returning('*')
-      .then(function (data) {
-      res.send(data)
-    })
-})
-
+// creates a new request
+router.post('/:id', requestsController.createRequest)
 
 module.exports = router

@@ -1,14 +1,5 @@
 const modelsUsers = require('../models/users')
 
-function getAllOfferingHelp(req, res, next){
-  const limit = req.query.limit
-  modelsUsers.getAllOfferingHelp(limit).then(function(result){
-  if (!result) {
-    return next({ status: 404, message: 'No users were found,  - ctrl Offering help'})
-  }
-  res.status(200).send(result)
-  })
-}
 
 function getAllUsers(req, res, next){
   const limit = req.query.limit
@@ -20,48 +11,32 @@ function getAllUsers(req, res, next){
   })
 }
 
-///////////// NEED TO UPDATE THIS CODE ////////////////
-function getUser(req, res, next){
-  const id = req.params.id
-  if (!id) {
-    return next({ status: 400, message: 'You need to provide an id, ctrl-users 2'})
+function getUserByUser_id(req, res, next){
+  const user_Id = req.params.id
+  if (!user_Id) {
+    return next({ status: 400, message: 'You need to provide an user id, ctrl-users 2'})
   }
-  const result = modelsUsers.getUser(id)
-  res.status(200).send(result)
-}
-
-///////////// NEED TO UPDATE THIS CODE ////////////////
-function deleteUser(req, res, next){
-  const id = req.params.id
-  const result = modelsUsers.deleteCar(id)
-  if (!result) {
-    return next({ status: 404, message: 'The user was not found so it was not deleted, ctrl-users 3'})
-  }
-  res.status(200).send(result)
-}
-
-
-///////////// NEED TO UPDATE THIS CODE ////////////////
-function newUser(req, res, next){
-  const { username, password } = req.body
-  if(!username) {
-    return next ({ status: 400, message: 'The user was not created. Bad username!, ctrl-users 4'})
-  }
-  if(!password) {
-    return next ({ status: 400, message: 'The user was not created. Needs a password!, ctrl-users 5'})
-  }
-  modelsUsers.newUser(username,password)
+  modelsUsers.getUserByUser_id(user_Id)
   .then(function(result){
-    return res.status(201).send(result)
+    if(!result){
+      return next({ status: 400, message: 'You result found for User'})
+    }
+    res.status(200).send(result)
   })
-  .catch(next)
 }
 
 
+function getAllOfferingHelp(req, res, next){
+  const limit = req.query.limit
+  modelsUsers.getAllOfferingHelp()
+  .then(function(result){
+    if (!result) {
+      return next({ status: 404, message: 'No users were found,  - ctrl Offering help'})
+    }
+    res.status(200).send(result)
+    })
+}
 
-
-
-///////////// NEED TO UPDATE THIS CODE ////////////////
 function updateUser(req, res, next){
   const id = req.params.id
   if (!id) {
@@ -70,9 +45,7 @@ function updateUser(req, res, next){
   if (!req.body) {
     return next ({ status: 400, message: 'Must attach a body to update a user'})
   }
-
   const { ...update } = req.body
-
   modelsUsers.updateUser( id, update )
   .then(result => {
     if (!result) {
@@ -80,10 +53,31 @@ function updateUser(req, res, next){
     }
     res.status(201).send(result[0])
   })
-  
 }
-///////////// NEED TO UPDATE THIS CODE ////////////////
 
 
-module.exports = { getAllUsers, getUser, deleteUser, newUser, updateUser, getAllOfferingHelp }
+function newUser(req, res, next){
+  const { username, password } = req.body
+  if(!username) {
+    return next ({ status: 400, message: 'The user was not created. Bad username!, ctrl-users 4'})
+  }
+  if(!password) {
+    return next ({ status: 400, message: 'The user was not created. Needs a password!, ctrl-users 5'})
+  }
+  modelsUsers.newUser(username, password)
+  .then(function(result){
+    return res.status(201).send(result)
+  })
+  .catch(next)
+}
+
+function deleteUser(req, res, next){
+  const id = req.params.id
+  const result = modelsUsers.deleteUser(id)
+  if (!result) {
+    return next({ status: 404, message: 'User not found so it was not deleted'})
+  }
+  res.status(200).send(result)
+}
+module.exports = { getAllUsers, getUserByUser_id, getAllOfferingHelp, newUser, updateUser, deleteUser }
 

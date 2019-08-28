@@ -6,7 +6,6 @@ function isAuthenticated(req, res, next){
     return next({ status: 401, message: 'Unauthorized ctrl-auth 1'})
   }
   const [scheme, credentials] = req.headers.authorization.split(' ')
-  console.log(credentials )
   jwt.verify(credentials, process.env.SECRET, (err, payload) => {
     console.log(payload, err)
     if(err){

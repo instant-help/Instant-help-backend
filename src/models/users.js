@@ -4,11 +4,10 @@ const bcrypt = require('bcrypt')
 function getOneByUserName(username){
   return (
     db('users')
-    .where({ username })
+    .where({ username: username })
     .first()
   )
 }
-
 
 function getAllUsers(limit){
   return limit ? db('users').slice(0, limit) : db('users')
@@ -22,21 +21,17 @@ function getAllOfferingHelp(limit){
   .orWhere({ queue_status: 'offering help in session' })
 }
 
-function getUser(username){
-///////////// NEED TO UPDATE THIS CODE ////////////////
-
-}
-
-function deleteUser(){
-///////////// NEED TO UPDATE THIS CODE ////////////////
-
+function getUserByUser_id(user_id){
+  return (
+  db('users')
+  .where({ id: user_id })
+  )
 }
 
 function newUser(username, password){
-///////////// NEED TO UPDATE THIS CODE ////////////////
   return getOneByUserName(username)
     .then(function(data){
-      if(data) throw { status: 400, message:'User already exists'}
+      if(data) throw { status: 400, message:'Username already exists'}
       return bcrypt.hash(password, 10)
     })
     .then(function(hashedPassword){
@@ -52,21 +47,12 @@ function newUser(username, password){
     })
 }
 
-
 function updateUser( id, update ){
-///////////// NEED TO UPDATE THIS CODE ////////////////
-// console.log('user model user update 3')
-console.log(id, update)
   return db('users')
     .where({ id })
     .update( update )
     .returning('*')
-      // .then( function (data){
-      //   // console.log('data',data)
-      //   // console.log(' //////////////////////// ')
-      //     return data
-      //   })
 }
 
-module.exports = { getOneByUserName, getAllUsers, getUser, deleteUser, newUser, updateUser, getAllOfferingHelp }
+module.exports = { getOneByUserName,getUserByUser_id, getAllUsers, newUser, updateUser, getAllOfferingHelp }
 
