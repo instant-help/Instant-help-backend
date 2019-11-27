@@ -11,9 +11,9 @@ app.use(bodyParser.json())
 app.use(morgan('dev'))
 
 
-if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').load()
-}
+// if (process.env.NODE_ENV !== 'production') {
+//   require('dotenv').load()
+// }
 
 app.use('/auth', require('./routes/auth'))
 app.use('/users', require('./routes/users'))
@@ -31,7 +31,7 @@ app.use((err, req, res, next) => {
 })
 
 app.use((req, res, next) => {
-  console.log(req, `${process.env.NODE_ENV}`)
+  console.log(req)
   res.status(404).json({
     error: {
       message: 'Error not found in app.js'
@@ -39,5 +39,5 @@ app.use((req, res, next) => {
   })
 })
 
-const listener = () => console.log(`Listening on port ${port}! ${process.env.NODE_ENV}`)
+const listener = () => console.log(`Listening on port ${port}!`)
 app.listen(port, listener)
