@@ -23,20 +23,20 @@
   "homepage": "https://github.com/ChrisIhler/Capstone-Back-End#readme",
   "description": "",
   "dependencies": {
-    "axios": "^0.18.0",
-    "bcrypt": "^3.0.3",
-    "body-parser": "^1.18.3",
+    "axios": "^0.18.1",
+    "bcrypt": "^3.0.7",
+    "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "dotenv": "^6.2.0",
-    "express": "^4.16.4",
-    "jsonwebtoken": "^8.4.0",
-    "knex": "^0.16.3",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "knex": "^0.16.5",
     "morgan": "^1.9.1",
-    "node": "^11.8.0",
+    "node": "^11.15.0",
     "node-modules": "^1.0.1",
-    "nodemon": "^1.18.9",
+    "nodemon": "^1.19.4",
     "postgre-sql": "^1.18.0",
-    "uuid": "^3.3.2"
+    "uuid": "^3.3.3"
   },
   "devDependencies": {
     "lorem-hipsum": "^0.1.7"
