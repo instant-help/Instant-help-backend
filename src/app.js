@@ -31,7 +31,7 @@ app.use((err, req, res, next) => {
 })
 
 app.use((req, res, next) => {
-  console.log(req)
+  console.log(req, `${process.env.NODE_ENV}`)
   res.status(404).json({
     error: {
       message: 'Error not found in app.js'
@@ -39,5 +39,5 @@ app.use((req, res, next) => {
   })
 })
 
-const listener = () => console.log(`Listening on port ${port}!`)
+const listener = () => console.log(`Listening on port ${port}! ${process.env.NODE_ENV}`)
 app.listen(port, listener)
